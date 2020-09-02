@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+    </head>
+    <body>
+        <div class="container-fluid" style="width:80%">
+            <div class="row">
+            <div class="col">
+            <a href="/index" style="text-decoration:none">
+        <span class="row">
+
+        <h1 class="display-4">OSRS Tracker</h1>
+        <h4 class="font-weight-lighter">Alpha</h4>
+
+
+
+        </span>
+             </a>
+            </div>
+            <div class="col">
+                {% block buttons %}
+                {% endblock %}
+            </div>
+            </div>
+        {% block content %}{% endblock %}
+            <hr/>
+            <h5 style="text-align-last: center"> <a href="https://github.com/rorygee/OSRSTracker">Github Repo</a> | <a href="/api/docs">API</a> | <a href="/index">Live Tracker</a></h5>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    </body>
+</html>
