@@ -34,6 +34,96 @@
     </div>
 </div>
 {% endblock %}
+<div style="width: 50%">
+    <canvas id="graph1"></canvas>
+</div>
+
+<div style="width: 50%">
+    <canvas id="graph2"></canvas>
+</div>
+
+{% block javascript %}
+<script>
+
+Chart.defaults.global.responsive = true;
+Chart.defaults.global.maintainAspectRatio = true;
+
+Chart.defaults.global.legend.position='bottom' ;
+
+var chartData1 = {
+  labels : JSON.parse({{ xpdata[0][0] | tojson }}),
+  datasets : [
+    {% for x in range(1,25) %}{
+    label: '{{ keys[x] }}',
+    fill: true,
+    lineTension: 0.1,
+    backgroundColor: "rgba({{ xpcolours[x-1] }},0.2)",
+    borderColor: "rgba({{ xpcolours[x-1] }},1)",
+    borderCapStyle: 'butt',
+    borderDash: [],
+    borderDashOffset: 0.0,
+    borderJoinStyle: 'miter',
+    pointBorderColor: "rgba({{ xpcolours[x-1] }},1)",
+    pointBackgroundColor: "#fff",
+    pointBorderWidth: 1,
+    pointHoverRadius: 5,
+    pointHoverBackgroundColor: "rgba({{ xpcolours[x-1] }},1)",
+    pointHoverBorderColor: "rgba(220,220,220,1)",
+    pointHoverBorderWidth: 2,
+    pointRadius: 1,
+    pointHitRadius: 10,
+    data : JSON.parse({{ xpdata[x] | tojson }}),
+    spanGaps: false
+    }{% if x != 25 %},{% endif %}
+    {% endfor %}
+  ]
+}
+
+var chartData2 = {
+  labels : JSON.parse({{ xpdata[0][1] | tojson }}),
+  datasets : [
+    {% for x in range(1,25) %}{
+    label: '{{ keys[x] }}',
+    fill: true,
+    lineTension: 0.1,
+    backgroundColor: "rgba({{ xpcolours[x-1] }},0.2)",
+    borderColor: "rgba({{ xpcolours[x-1] }},1)",
+    borderCapStyle: 'butt',
+    borderDash: [],
+    borderDashOffset: 0.0,
+    borderJoinStyle: 'miter',
+    pointBorderColor: "rgba({{ xpcolours[x-1] }},1)",
+    pointBackgroundColor: "#fff",
+    pointBorderWidth: 1,
+    pointHoverRadius: 5,
+    pointHoverBackgroundColor: "rgba({{ xpcolours[x-1] }},1)",
+    pointHoverBorderColor: "rgba(220,220,220,1)",
+    pointHoverBorderWidth: 2,
+    pointRadius: 1,
+    pointHitRadius: 10,
+    data : JSON.parse({{ xpdata[x] | tojson }}),
+    spanGaps: false
+    }{% if x != 25 %},{% endif %}
+    {% endfor %}
+  ]
+}
+
+var ctx1 = document.getElementById("chartData1").getContext("2d");
+
+var ctx2 = document.getElementById("chartData2").getContext("2d");
+
+// create the chart using the chart canvas
+var chart1 = new Chart(ctx1, {
+  type: "line",
+  data: chartData,
+  scaleFontColor: "#000000"
+});
+
+var chart2 = new Chart(ctx2, {
+  type: "line",
+  data: chartData,
+  scaleFontColor: "#000000"
+});
 
 {% block content %}
 
