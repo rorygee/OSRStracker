@@ -30,7 +30,6 @@ def results_page(username):
             user2 = request.form.get('username')
             return redirect('/compare/'+user1+'/'+user2+'/')
 
-    dbHandler.connect_to_db()
     dbHandler.initialise_user_table()
     dbHandler.add_xp_record(username)
     xpRecords = dbHandler.get_xp_records_for_user(username)
@@ -55,7 +54,6 @@ def compare_page(user1, user2):
             user2 = request.form.get('username')
             return redirect('/compare/'+user1+'/'+user2+'/')
 
-    dbHandler.connect_to_db()
     dbHandler.initialise_user_table()
     dbHandler.add_xp_record(user1)
     xpRecords = dbHandler.get_xp_records_for_user(user1)
@@ -63,7 +61,7 @@ def compare_page(user1, user2):
     print(xpData)
     legend = 'dates'
     labels = json.dumps(xpData[0])
-    return render_template('results.html', title='Runescape XP Tracker', records=xpRecords,
+    return render_template('compare.html', title='Runescape XP Tracker', records=xpRecords,
                            xpcolours=jsonHandler.keyColours, xpdata=xpData, keys=jsonHandler.dictKeys, legend=legend,
                            labels=labels, username=user1, form=form)
 
@@ -72,7 +70,6 @@ def compare_page(user1, user2):
 
 @app.route('/export/<username>.json')
 def export_json(username):
-    dbHandler.connect_to_db()
     dbHandler.initialise_user_table()
     xpRecords = dbHandler.get_xp_records_for_user(username)
     return jsonHandler.create_json_export(xpRecords)

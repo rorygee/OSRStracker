@@ -5,20 +5,20 @@ from app import requestsHandler
 def connect_to_db():
 
     mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="",
-    database="osrsdatabase")
+        host="localhost",
+        user="root",
+        password="",
+        database="osrsdatabase")
 
 
 # establishes a connection, runs the query
 def execute_query(query):
 
     mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="",
-    database="osrsdatabase")
+        host="localhost",
+        user="root",
+        password="",
+        database="osrsdatabase")
 
     dbcursor = mydb.cursor()
     dbcursor.execute(query)
@@ -44,10 +44,10 @@ def query_commit(query):
 def initialise_user_table():
 
     mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="",
-    database="osrsdatabase")
+        host="localhost",
+        user="root",
+        password="",
+        database="osrsdatabase")
 
     dbcursor = mydb.cursor()
     query = """CREATE TABLE IF NOT EXISTS playerdata(
@@ -110,10 +110,10 @@ def check_day(username,date):
 def add_new_user():
 
     mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="",
-    database="osrsdatabase")
+        host="localhost",
+        user="root",
+        password="",
+        database="osrsdatabase")
 
     dbcursor = mydb.cursor()
 

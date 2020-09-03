@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 
-
-
-{% block buttons %}<br>
+{% block buttons %}
+<br>
 <div class="btn-group" role="group" style="float: right">
     <div class="btn-group" role="group">
         <button button id="userBtnGroup" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -21,14 +20,14 @@
             </span>
         </span>
     </div>
-    <div class="btn-group" role="group" aria-label="Basic example" data-toggle="modal" data-target="#exampleModal">
+    <div class="btn-group" role="group" aria-label="Record Button" data-toggle="modal" data-target="#recordModal">
         <button type="button" class="btn btn-secondary">View Records</button>
     </div>
     <div class="btn-group" role="group">
-        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button id="exportBtnGroup" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Export As...
         </button>
-        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+        <div class="dropdown-menu" aria-labelledby="exportBtnGroup">
             <a class="dropdown-item" href="/export/{{ username }}.json">JSON</a>
             <a class="dropdown-item" href="/export/{{ username }}.csv">CSV</a>
         </div>
@@ -93,7 +92,7 @@ var myChart = new Chart(ctx, {
 
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="recordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
