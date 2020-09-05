@@ -34,6 +34,8 @@
     </div>
 </div>
 {% endblock %}
+{% block content %}
+
 <div style="width: 50%">
     <canvas id="graph1"></canvas>
 </div>
@@ -72,7 +74,7 @@ var chartData1 = {
     pointHoverBorderWidth: 2,
     pointRadius: 1,
     pointHitRadius: 10,
-    data : JSON.parse({{ xpdata[x] | tojson }}),
+    data : JSON.parse({{ xpdata[0][x] | tojson }}),
     spanGaps: false
     }{% if x != 25 %},{% endif %}
     {% endfor %}
@@ -80,7 +82,7 @@ var chartData1 = {
 }
 
 var chartData2 = {
-  labels : JSON.parse({{ xpdata[0][1] | tojson }}),
+  labels : JSON.parse({{ xpdata[1][0] | tojson }}),
   datasets : [
     {% for x in range(1,25) %}{
     label: '{{ keys[x] }}',
@@ -101,7 +103,7 @@ var chartData2 = {
     pointHoverBorderWidth: 2,
     pointRadius: 1,
     pointHitRadius: 10,
-    data : JSON.parse({{ xpdata[x] | tojson }}),
+    data : JSON.parse({{ xpdata[1][x] | tojson }}),
     spanGaps: false
     }{% if x != 25 %},{% endif %}
     {% endfor %}
@@ -125,6 +127,6 @@ var chart2 = new Chart(ctx2, {
   scaleFontColor: "#000000"
 });
 
-{% block content %}
-
+</script>
+{% endblock %}
 {% endblock %}

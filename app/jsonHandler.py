@@ -76,5 +76,47 @@ def create_datasets(xpRecords):
 
     return jsonList
 
+def create_comparison_datasets(xpRecords1, xpRecords2):
+
+    print(xpRecords1)
+    print(xpRecords2)
+    print("--------------------------------------")
+
+    xpDict1 = {} # need a 2d array implementation here come on now
+
+    for key in dictKeys:
+        xpDict1[key] = []
+
+    for record in xpRecords1:
+        index = 0
+        for key in dictKeys:
+            print("key: " + key)
+            index = index + 1
+
+            xpDict1[key].append(record[index])
+
+    xpDict2 = {} # see xpdict1
+
+    for key in dictKeys:
+        xpDict2[key] = []
+
+    for record in xpRecords2:
+        index = 0
+        for key in dictKeys:
+            print("key: "+key)
+            index = index + 1
+
+            xpDict2[key].append(record[index])
+
+    jsonList = [[], []]
+
+    for key in xpDict1:
+        jsonList[0].append(json.dumps(xpDict1[key]))
+
+    for key in xpDict1:
+        jsonList[1].append(json.dumps(xpDict1[key]))
+
+    return jsonList
+
 def create_json_export(xpRecords):
     return json.dumps(xpRecords)

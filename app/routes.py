@@ -34,9 +34,10 @@ def results_page(username):
     dbHandler.add_xp_record(username)
     xpRecords = dbHandler.get_xp_records_for_user(username)
     xpData = jsonHandler.create_datasets(xpRecords)
+
     print(xpData)
     legend = 'dates'
-    labels = json.dumps(xpData[0])
+    labels = json.dumps(xpData[0][0])
     return render_template('results.html', title='Runescape XP Tracker', records=xpRecords,
                            xpcolours=jsonHandler.keyColours, xpdata=xpData, keys=jsonHandler.dictKeys, legend=legend,
                            labels=labels, username=username, form=form)
@@ -56,8 +57,10 @@ def compare_page(user1, user2):
 
     dbHandler.initialise_user_table()
     dbHandler.add_xp_record(user1)
-    xpRecords = dbHandler.get_xp_records_for_user(user1)
-    xpData = jsonHandler.create_datasets(xpRecords)
+    dbHandler.add_xp_record(user2)
+    xpRecords = [dbHandler.get_xp_records_for_user(user1),dbHandler.get_xp_records_for_user(user2)]
+    xpData = jsonHandler.create_comparison_datasets(xpRecords[0],xpRecords[1])
+
     print(xpData)
     legend = 'dates'
     labels = json.dumps(xpData[0])
