@@ -35,15 +35,15 @@
 </div>
 {% endblock %}
 {% block content %}
+<div class="row">
+    <div class="col" style="width:50%">
+        <canvas id="graph1"></canvas>
+    </div>
 
-<div style="width: 50%">
-    <canvas id="graph1"></canvas>
+    <div class="col" style="width:50%">
+        <canvas id="graph2"></canvas>
+    </div>
 </div>
-
-<div style="width: 50%">
-    <canvas id="graph2"></canvas>
-</div>
-
 {% block javascript %}
 <script>
 
@@ -110,20 +110,20 @@ var chartData2 = {
   ]
 }
 
-var ctx1 = document.getElementById("chartData1").getContext("2d");
+var ctx1 = document.getElementById("graph1").getContext("2d");
 
-var ctx2 = document.getElementById("chartData2").getContext("2d");
+var ctx2 = document.getElementById("graph2").getContext("2d");
 
 // create the chart using the chart canvas
 var chart1 = new Chart(ctx1, {
   type: "line",
-  data: chartData,
+  data: chartData1,
   scaleFontColor: "#000000"
 });
 
 var chart2 = new Chart(ctx2, {
   type: "line",
-  data: chartData,
+  data: chartData2,
   scaleFontColor: "#000000"
 });
 
