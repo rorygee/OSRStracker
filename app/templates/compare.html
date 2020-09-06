@@ -11,10 +11,8 @@
             <span class="form-group">
                 <form action="" method="post" novalidate>
                     {{ form.hidden_tag() }}
-                    <p>{{ form.username(class_="form-control", size=32) }}</p>
                     <span class="btn-group" role="group">
-                        {{ form.view(class_="btn btn-primary") }}
-                        {{ form.compare(class_="btn btn-primary") }}
+                        {{ form.update(class_="btn btn-primary") }}
                     </span>
                 </form>
             </span>
@@ -25,24 +23,34 @@
 {% block content %}
 <div class="row">
     <div class="card" style="width:50%">
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="{{ user1 }}" aria-label="{{ user1 }}" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-                <button class="btn btn-outline-primary" type="button">Update</button>
-                <a class="btn btn-outline-danger" href="/results/{{ user2 }}">-</a>
+
+        <form action="" method="post" novalidate>
+            <div class="input-group mb-3">
+                {{ form.hidden_tag() }}
+                {{ form.username1(class_="form-control", placeholder=user1) }}
+                <div class="input-group-append">
+                    {{ form.update(class_="btn btn-outline-primary") }}
+                    {{ form.remove1(class_="btn-outline-danger") }}
+                </div>
             </div>
-        </div>
+        </form>
+
+
         <canvas id="graph1" class="xpGraph"></canvas>
     </div>
 
     <div class="card" style="width:50%">
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="{{ user2 }}" aria-label="{{ user2 }}" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-                <button class="btn btn-outline-primary" type="button">Update</button>
-                <button class="btn btn-outline-danger" type="button">-</button>
+
+        <form action="" method="post" novalidate>
+            <div class="input-group mb-3">
+                {{ form.hidden_tag() }}
+                {{ form.username2(class_="form-control", placeholder=user2) }}
+                <div class="input-group-append">
+                    {{ form.update(class_="btn btn-outline-primary") }}
+                    {{ form.remove2(class_="btn-outline-danger") }}
+                </div>
             </div>
-        </div>
+        </form>
         <canvas id="graph2" class="xpGraph"></canvas>
     </div>
 </div>

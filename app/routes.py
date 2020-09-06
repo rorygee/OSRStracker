@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, json
 from app import app
 from app import dbHandler
 from app import jsonHandler
-from app.forms import usernameForm, addUserForm
+from app.forms import usernameForm, addUserForm, compareUserForm
 import datetime
 
 
@@ -48,19 +48,31 @@ def results_page(username):
 
 @app.route('/compare/<user1>/<user2>/', methods=['GET', 'POST'])
 def compare_page(user1, user2):
-    form = addUserForm()
+    form = compareUserForm()
     if form.validate_on_submit():
-        if form.view.data:
-            username = request.form.get('username')
+        if form.remove1.data:
+
+            username = user2
+            print(username)
             return redirect('/results/' + username)
-        elif form.compare.data:
-            user1 = user1
-            user2 = request.form.get('username')
+        elif form.remove2.data:
+            username = user1
+            return redirect('/results/' + username)
+        elif form.update.data:
+            if form.username1.data:
+                user1 = request.form.get('username1')
+            if form.username2.data:
+                user2 = request.form.get('username2')
+
+            print("User1: "+user1+" user2: "+user2)
             return redirect('/compare/'+user1+'/'+user2+'/')
 
     dbHandler.initialise_user_table()
-    dbHandler.add_xp_record(user1)
-    dbHandler.add_xp_record(user2)
+    try:
+        dbHandler.add_xp_record(user1)
+        dbHandler.add_xp_record(user2)
+    except:
+        print("Failed to add new records!")
     xpRecords = [dbHandler.get_xp_records_for_user(user1),dbHandler.get_xp_records_for_user(user2)]
     xpData = jsonHandler.create_comparison_datasets(xpRecords[0],xpRecords[1])
 
