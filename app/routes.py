@@ -31,7 +31,10 @@ def results_page(username):
             return redirect('/compare/'+user1+'/'+user2+'/')
 
     dbHandler.initialise_user_table()
-    dbHandler.add_xp_record(username)
+    try:
+        dbHandler.add_xp_record(username)
+    except:
+        print("Failed to add new record!")
     xpRecords = dbHandler.get_xp_records_for_user(username)
     xpData = jsonHandler.create_datasets(xpRecords)
 
