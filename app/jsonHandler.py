@@ -113,8 +113,8 @@ def create_comparison_datasets(xpRecords1, xpRecords2):
     for key in xpDict1:
         jsonList[0].append(json.dumps(xpDict1[key]))
 
-    for key in xpDict1:
-        jsonList[1].append(json.dumps(xpDict1[key]))
+    for key in xpDict2:
+        jsonList[1].append(json.dumps(xpDict2[key]))
 
     return jsonList
 
