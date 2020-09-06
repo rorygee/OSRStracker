@@ -2,25 +2,77 @@
 
 {% block userbutton %}
 <br>
+
 <div class="btn-group" role="group" style="float: right">
-    <div class="btn-group" role="group">
-        <button button id="userBtnGroup" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Users: {{ user1 }}, {{ user2 }}
+    <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#legendCollapse" aria-expanded="false" aria-controls="collapseExample">
+        Legend
+    </button>
+    <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#graphOptionsCollapse" aria-expanded="false" aria-controls="collapseExample">
+        Graph Options
+    </button>
+    <div class="btn-group" role="group" aria-label="Basic example" data-toggle="modal" data-target="#exampleModal">
+        <button type="button" class="btn btn-secondary">View Records</button>
+    </div>
+    <div class="btn-group dropup" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Export As...
         </button>
-        <span class="dropdown-menu p-4" aria-labelledby="userBtnGroup">
-            <span class="form-group">
-                <form action="" method="post" novalidate>
-                    {{ form.hidden_tag() }}
-                    <span class="btn-group" role="group">
-                        {{ form.update(class_="btn btn-primary") }}
-                    </span>
-                </form>
-            </span>
-        </span>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            <a class="dropdown-item" href="/export/{{ user1 }}.json">{{ user1 }} (JSON)</a>
+            <a class="dropdown-item" href="/export/{{ user2 }}.json">{{ user2 }} (JSON)</a>
+            <a class="dropdown-item" href="/export/{{ user1 }}.csv">{{ user1 }} (CSV)</a>
+            <a class="dropdown-item" href="/export/{{ user2 }}.csv">{{ user2 }} (CSV)</a>
+        </div>
     </div>
 </div>
+
+
 {% endblock %}
+
+
+
 {% block content %}
+<div class="row">
+<div class="collapse" id="legendCollapse" style="float: left">
+    <div class="card card-body">
+        <div class="row">
+            {% for x in range(0,24) %}
+            <script>
+                function {{ keys[x+1] }}OnClickListener() {
+                        document.querySelectorAll('.xpGraph').forEach((chartItem,index)=>{
+                            var chart = Chart.instances[index];
+                            var dataItem = chart.data.datasets[{{ x }}]
+                            if(dataItem.hidden == false || dataItem.hidden == null){
+                                dataItem.hidden = true;
+                                document.querySelector('.{{ keys[x+1] }}LegendBox').style.backgroundColor = "white";
+                              document.querySelector('.{{ keys[x+1] }}LegendBox').style.color = "black";
+                            } else {
+                              dataItem.hidden = false;
+                              document.querySelector('.{{ keys[x+1] }}LegendBox').style.backgroundColor = "rgb({{ xpcolours[x] }})";
+                              document.querySelector('.{{ keys[x+1] }}LegendBox').style.color = "white";
+                            }
+                            chart.update();
+                            })
+
+                }
+            </script>
+            <span class="{{ keys[x+1] }}LegendBox" style="border-radius: 5px; border: 2px solid rgb({{ xpcolours[x] }}); padding: 2px; margin: 5px; background-color: rgb({{ xpcolours[x] }}); color: white;" onclick="{{ keys[x+1] }}OnClickListener()">
+                <span class="small">{{ keys[x+1] }}</span>
+
+            </span>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="collapse" id="graphOptionsCollapse">
+    <div class="card card-body">
+
+    </div>
+</div>
+
+</div>
+
 <div class="row">
     <div class="card" style="width:50%">
 
@@ -30,7 +82,7 @@
                 {{ form.username1(class_="form-control", placeholder=user1) }}
                 <div class="input-group-append">
                     {{ form.update(class_="btn btn-outline-primary") }}
-                    {{ form.remove1(class_="btn-outline-danger") }}
+                    {{ form.remove1(class_="btn btn-outline-danger") }}
                 </div>
             </div>
         </form>
@@ -47,7 +99,7 @@
                 {{ form.username2(class_="form-control", placeholder=user2) }}
                 <div class="input-group-append">
                     {{ form.update(class_="btn btn-outline-primary") }}
-                    {{ form.remove2(class_="btn-outline-danger") }}
+                    {{ form.remove2(class_="btn btn-outline-danger") }}
                 </div>
             </div>
         </form>
@@ -150,63 +202,6 @@ var chart2 = new Chart(ctx2, {
 
 </script>
 {% endblock %}
-<div class="collapse" id="legendCollapse">
-    <div class="card card-body">
-        <div class="row">
-            {% for x in range(0,24) %}
-            <script>
-                function {{ keys[x+1] }}OnClickListener() {
-                        document.querySelectorAll('.xpGraph').forEach((chartItem,index)=>{
-                            var chart = Chart.instances[index];
-                            var dataItem = chart.data.datasets[{{ x }}]
-                            if(dataItem.hidden == false || dataItem.hidden == null){
-                                dataItem.hidden = true;
-                                document.querySelector('.{{ keys[x+1] }}LegendBox').style.backgroundColor = "white";
-                              document.querySelector('.{{ keys[x+1] }}LegendBox').style.color = "black";
-                            } else {
-                              dataItem.hidden = false;
-                              document.querySelector('.{{ keys[x+1] }}LegendBox').style.backgroundColor = "rgb({{ xpcolours[x] }})";
-                              document.querySelector('.{{ keys[x+1] }}LegendBox').style.color = "white";
-                            }
-                            chart.update();
-                            })
 
-                }
-            </script>
-            <span class="{{ keys[x+1] }}LegendBox" style="border-radius: 5px; border: 2px solid rgb({{ xpcolours[x] }}); padding: 2px; margin: 5px; background-color: rgb({{ xpcolours[x] }}); color: white;" onclick="{{ keys[x+1] }}OnClickListener()">
-                <span class="small">{{ keys[x+1] }}</span>
-
-            </span>
-            {% endfor %}
-        </div>
-    </div>
-</div>
-<div class="btn-group" role="group">
-    <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#legendCollapse" aria-expanded="false" aria-controls="collapseExample">
-        Legend
-    </button>
-    <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#graphOptionsCollapse" aria-expanded="false" aria-controls="collapseExample">
-        Graph Options
-    </button>
-    <div class="btn-group" role="group" aria-label="Basic example" data-toggle="modal" data-target="#exampleModal">
-        <button type="button" class="btn btn-secondary">View Records</button>
-    </div>
-    <div class="btn-group dropup" role="group">
-        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Export As...
-        </button>
-        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-            <a class="dropdown-item" href="/export/{{ user1 }}.json">{{ user1 }} (JSON)</a>
-            <a class="dropdown-item" href="/export/{{ user2 }}.json">{{ user2 }} (JSON)</a>
-            <a class="dropdown-item" href="/export/{{ user1 }}.csv">{{ user1 }} (CSV)</a>
-            <a class="dropdown-item" href="/export/{{ user2 }}.csv">{{ user2 }} (CSV)</a>
-        </div>
-    </div>
-</div>
-<div class="collapse" id="graphOptionsCollapse">
-    <div class="card card-body">
-
-    </div>
-</div>
 
 {% endblock %}
