@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block buttons %}
+{% block userbutton %}
 <br>
 <div class="btn-group" role="group" style="float: right">
     <div class="btn-group" role="group">
@@ -19,20 +19,6 @@
                 </form>
             </span>
         </span>
-    </div>
-    <div class="btn-group" role="group" aria-label="Basic example" data-toggle="modal" data-target="#exampleModal">
-        <button type="button" class="btn btn-secondary">View Records</button>
-    </div>
-    <div class="btn-group" role="group">
-        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Export As...
-        </button>
-        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-            <a class="dropdown-item" href="/export/{{ user1 }}.json">{{ user1 }} (JSON)</a>
-            <a class="dropdown-item" href="/export/{{ user2 }}.json">{{ user2 }} (JSON)</a>
-            <a class="dropdown-item" href="/export/{{ user1 }}.csv">{{ user1 }} (CSV)</a>
-            <a class="dropdown-item" href="/export/{{ user2 }}.csv">{{ user2 }} (CSV)</a>
-        </div>
     </div>
 </div>
 {% endblock %}
@@ -141,7 +127,44 @@ var chart2 = new Chart(ctx2, {
 
 </script>
 {% endblock %}
-<button type="button" class="btn btn-secondary">Legend</button>
-<button type="button" class="btn btn-secondary">Graph Options</button>
+<div class="collapse" id="legendCollapse">
+    <div class="card card-body">
+        <div class="row">
+            {% for x in range(0,24) %}
+                <svg width="70" height="40">
+                    <rect x="10" y="10" rx="3" ry="3" width="45" height="20" style="fill:rgb(255,255,255);stroke-width:2;stroke:rgb({{ xpcolours[x] }})" />
+                        Sorry, your browser does not support inline SVG.
+                </svg>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="btn-group" role="group">
+  <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#legendCollapse" aria-expanded="false" aria-controls="collapseExample">
+    Legend
+  </button>
+<button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#graphOptionsCollapse" aria-expanded="false" aria-controls="collapseExample">
+    Graph Options
+  </button>
+<div class="btn-group" role="group" aria-label="Basic example" data-toggle="modal" data-target="#exampleModal">
+        <button type="button" class="btn btn-secondary">View Records</button>
+</div>
+    <div class="btn-group dropup" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Export As...
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            <a class="dropdown-item" href="/export/{{ user1 }}.json">{{ user1 }} (JSON)</a>
+            <a class="dropdown-item" href="/export/{{ user2 }}.json">{{ user2 }} (JSON)</a>
+            <a class="dropdown-item" href="/export/{{ user1 }}.csv">{{ user1 }} (CSV)</a>
+            <a class="dropdown-item" href="/export/{{ user2 }}.csv">{{ user2 }} (CSV)</a>
+        </div>
+    </div>
+</div>
+<div class="collapse" id="graphOptionsCollapse">
+  <div class="card card-body">
+
+  </div>
+</div>
 
 {% endblock %}
