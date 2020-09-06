@@ -5,7 +5,7 @@
 <div class="btn-group" role="group" style="float: right">
     <div class="btn-group" role="group">
         <button button id="userBtnGroup" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            User: {{ username }}
+            Users: {{ user1 }}, {{ user2 }}
         </button>
         <span class="dropdown-menu p-4" aria-labelledby="userBtnGroup">
             <span class="form-group">
@@ -23,7 +23,6 @@
     <div class="btn-group" role="group" aria-label="Basic example" data-toggle="modal" data-target="#exampleModal">
         <button type="button" class="btn btn-secondary">View Records</button>
     </div>
-    <button type="button" class="btn btn-secondary">Labels</button>
     <div class="btn-group" role="group">
         <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Export As...
@@ -119,15 +118,28 @@ var ctx2 = document.getElementById("graph2").getContext("2d");
 var chart1 = new Chart(ctx1, {
   type: "line",
   data: chartData1,
-  scaleFontColor: "#000000"
+  scaleFontColor: "#000000",
+  options: {
+         legend: {
+            display: false
+         }
+    }
 });
 
 var chart2 = new Chart(ctx2, {
   type: "line",
   data: chartData2,
-  scaleFontColor: "#000000"
+  scaleFontColor: "#000000",
+  options: {
+         legend: {
+            display: false
+         }
+    }
 });
 
 </script>
 {% endblock %}
+<button type="button" class="btn btn-secondary">Legend</button>
+<button type="button" class="btn btn-secondary">Graph Options</button>
+
 {% endblock %}

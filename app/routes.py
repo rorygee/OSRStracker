@@ -66,7 +66,7 @@ def compare_page(user1, user2):
     labels = json.dumps(xpData[0])
     return render_template('compare.html', title='Runescape XP Tracker', records=xpRecords,
                            xpcolours=jsonHandler.keyColours, xpdata=xpData, keys=jsonHandler.dictKeys, legend=legend,
-                           labels=labels, username=user1, form=form)
+                           labels=labels, user1=user1, user2=user2, form=form)
 
 
 # Data export routes
