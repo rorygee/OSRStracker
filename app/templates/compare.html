@@ -131,10 +131,9 @@ var chart2 = new Chart(ctx2, {
     <div class="card card-body">
         <div class="row">
             {% for x in range(0,24) %}
-                <svg width="70" height="40">
-                    <rect x="10" y="10" rx="3" ry="3" width="45" height="20" style="fill:rgb(255,255,255);stroke-width:2;stroke:rgb({{ xpcolours[x] }})" />
-                        Sorry, your browser does not support inline SVG.
-                </svg>
+            <div style="border-radius: 10px; border: 2px solid rgb({{ xpcolours[x] }}); padding: 5px; ">
+                {{ keys[x+1] }}
+            </div>
             {% endfor %}
         </div>
     </div>
