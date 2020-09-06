@@ -25,11 +25,11 @@
 {% block content %}
 <div class="row">
     <div class="col" style="width:50%">
-        <canvas id="graph1"></canvas>
+        <canvas id="graph1" class="xpGraph"></canvas>
     </div>
 
     <div class="col" style="width:50%">
-        <canvas id="graph2"></canvas>
+        <canvas id="graph2" class="xpGraph"></canvas>
     </div>
 </div>
 {% block javascript %}
@@ -125,15 +125,36 @@ var chart2 = new Chart(ctx2, {
     }
 });
 
+
 </script>
 {% endblock %}
 <div class="collapse" id="legendCollapse">
     <div class="card card-body">
         <div class="row">
             {% for x in range(0,24) %}
-            <div style="border-radius: 10px; border: 2px solid rgb({{ xpcolours[x] }}); padding: 5px; ">
-                {{ keys[x+1] }}
-            </div>
+            <script>
+                function {{ keys[x+1] }}OnClickListener() {
+                        document.querySelectorAll('.xpGraph').forEach((chartItem,index)=>{
+                            var chart = Chart.instances[index];
+                            var dataItem = chart.data.datasets[{{ x }}]
+                            if(dataItem.hidden == false || dataItem.hidden == null){
+                                dataItem.hidden = true;
+                                document.querySelector('.{{ keys[x+1] }}LegendBox').style.backgroundColor = "white";
+                              document.querySelector('.{{ keys[x+1] }}LegendBox').style.color = "black";
+                            } else {
+                              dataItem.hidden = false;
+                              document.querySelector('.{{ keys[x+1] }}LegendBox').style.backgroundColor = "rgb({{ xpcolours[x] }})";
+                              document.querySelector('.{{ keys[x+1] }}LegendBox').style.color = "white";
+                            }
+                            chart.update();
+                            })
+
+                }
+            </script>
+            <span class="{{ keys[x+1] }}LegendBox" style="border-radius: 5px; border: 2px solid rgb({{ xpcolours[x] }}); padding: 2px; margin: 5px; background-color: rgb({{ xpcolours[x] }}); color: white;" onclick="{{ keys[x+1] }}OnClickListener()">
+                <span class="small">{{ keys[x+1] }}</span>
+
+            </span>
             {% endfor %}
         </div>
     </div>
