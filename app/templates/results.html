@@ -7,6 +7,9 @@
         <button button id="userBtnGroup" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             User: {{ username }}
         </button>
+        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#legendCollapse" aria-expanded="false" aria-controls="collapseExample">
+            Legend
+        </button>
         <span class="dropdown-menu p-4" aria-labelledby="userBtnGroup">
             <span class="form-group">
                 <form action="" method="post" novalidate>
@@ -37,9 +40,9 @@
 {% endblock %}
 {% block content %}
 <!-- bar chart canvas element -->
-
-<canvas id="myChart"></canvas>
-
+<div class="card" style="width:100%">
+    <canvas id="myChart"></canvas>
+</div>
 {% block javascript %}
 <script>
 
@@ -83,14 +86,51 @@ var ctx = document.getElementById("myChart").getContext("2d");
 var myChart = new Chart(ctx, {
   type: "line",
   data: chartData,
-  scaleFontColor: "#000000"
+  scaleFontColor: "#000000",
+    options: {
+         legend: {
+            display: false
+         }
+    }
 });
 
 </script> <!-- default script, will need to configure for the full table -->
 
 {% endblock %}
 
+<div class="row">
+    <div class="collapse" id="legendCollapse" style="float: left">
+        <div class="card card-body">
+            <div class="row">
+                {% for x in range(0,24) %}
+                <script>
+                function {{ keys[x+1] }}OnClickListener() {
+                        document.querySelectorAll('.xpGraph').forEach((chartItem,index)=>{
+                            var chart = Chart.instances[index];
+                            var dataItem = chart.data.datasets[{{ x }}]
+                            if(dataItem.hidden == false || dataItem.hidden == null){
+                                dataItem.hidden = true;
+                                document.querySelector('.{{ keys[x+1] }}LegendBox').style.backgroundColor = "white";
+                              document.querySelector('.{{ keys[x+1] }}LegendBox').style.color = "black";
+                            } else {
+                              dataItem.hidden = false;
+                              document.querySelector('.{{ keys[x+1] }}LegendBox').style.backgroundColor = "rgb({{ xpcolours[x] }})";
+                              document.querySelector('.{{ keys[x+1] }}LegendBox').style.color = "white";
+                            }
+                            chart.update();
+                            })
 
+                }
+            </script>
+                <span class="{{ keys[x+1] }}LegendBox" style="border-radius: 5px; border: 2px solid rgb({{ xpcolours[x] }}); padding: 2px; margin: 5px; background-color: rgb({{ xpcolours[x] }}); color: white;" onclick="{{ keys[x+1] }}OnClickListener()">
+                <span class="small">{{ keys[x+1] }}</span>
+
+            </span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <div class="modal fade" id="recordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
