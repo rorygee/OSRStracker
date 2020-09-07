@@ -13,9 +13,9 @@ If you are looking at deploying this on your own web server, the following libra
 * Requests
 
 ## Screenshots
-![Screencap 1](https://i.ibb.co/CPcFsqp/2020-09-02-19-20-52-127-0-0-1-85a9c48461bc.png)
+![Screencap 1](https://i.ibb.co/pjLMynm/2020-09-07-23-36-06-127-0-0-1-23bce2823613.png)
 
-![Screencap 2](https://i.ibb.co/CWHg7Yb/2020-09-02-19-21-09-127-0-0-1-6ac09519ee93.png)
+![Screencap 2](https://i.ibb.co/zJL41rN/2020-09-07-23-38-35-127-0-0-1-04eec7a7def6.png)
 
 ![Screencap 3](https://i.ibb.co/s3DPzZY/2020-09-07-16-44-55-127-0-0-1-6e5f5527a867.png)
 
