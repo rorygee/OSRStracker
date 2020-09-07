@@ -17,5 +17,7 @@ If you are looking at deploying this on your own web server, the following libra
 
 ![Screencap 2](https://i.ibb.co/CWHg7Yb/2020-09-02-19-21-09-127-0-0-1-6ac09519ee93.png)
 
+![Screencap 3](https://i.ibb.co/s3DPzZY/2020-09-07-16-44-55-127-0-0-1-6e5f5527a867.png)
+
 ## Live Version
 Soon™
