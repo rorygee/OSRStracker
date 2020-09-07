@@ -8,8 +8,8 @@ class usernameForm(FlaskForm):
 
 class addUserForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()], render_kw={"placeholder": "Username"})
-    view = SubmitField('View')
-    compare = SubmitField('Compare')
+    view = SubmitField('Update')
+    compare = SubmitField('+')
 
 class compareUserForm(FlaskForm):
     username1 = StringField('Username')

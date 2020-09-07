@@ -4,29 +4,13 @@
 <br>
 <div class="btn-group" role="group" style="float: right">
     <div class="btn-group" role="group">
-        <button button id="userBtnGroup" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            User: {{ username }}
-        </button>
         <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#legendCollapse" aria-expanded="false" aria-controls="collapseExample">
             Legend
         </button>
-        <span class="dropdown-menu p-4" aria-labelledby="userBtnGroup">
-            <span class="form-group">
-                <form action="" method="post" novalidate>
-                    {{ form.hidden_tag() }}
-                    <p>{{ form.username(class_="form-control", size=32) }}</p>
-                    <span class="btn-group" role="group">
-                        {{ form.view(class_="btn btn-primary") }}
-                        {{ form.compare(class_="btn btn-primary") }}
-                    </span>
-                </form>
-            </span>
-        </span>
     </div>
     <div class="btn-group" role="group" aria-label="Record Button" data-toggle="modal" data-target="#recordModal">
         <button type="button" class="btn btn-secondary">View Records</button>
     </div>
-    <button type="button" class="btn btn-secondary">Labels</button>
     <div class="btn-group" role="group">
         <button id="exportBtnGroup" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Export As...
@@ -41,6 +25,16 @@
 {% block content %}
 <!-- bar chart canvas element -->
 <div class="card" style="width:100%">
+            <form action="" method="post" novalidate>
+            <div class="input-group mb-3">
+                {{ form.hidden_tag() }}
+                {{ form.username(class_="form-control", placeholder=username) }}
+                <div class="input-group-append">
+                    {{ form.view(class_="btn btn-outline-primary") }}
+                    {{ form.compare(class_="btn btn-outline-success") }}
+                </div>
+            </div>
+        </form>
     <canvas id="myChart"></canvas>
 </div>
 {% block javascript %}
