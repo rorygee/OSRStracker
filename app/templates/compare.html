@@ -1,39 +1,44 @@
 {% extends "base.html" %}
 
 {% block userbutton %}
-    <br>
+<br>
 
-    <div class="btn-group" role="group" style="float: right">
-        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#legendCollapse" aria-expanded="false" aria-controls="collapseExample">
-            Legend
+<div class="btn-group" role="group" style="float: right">
+    <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#legendCollapse" aria-expanded="false" aria-controls="collapseExample">
+        Legend
+    </button>
+    <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#graphOptionsCollapse" aria-expanded="false" aria-controls="collapseExample">
+        Graph Options
+    </button>
+    <div class="btn-group" role="group" aria-label="Basic example" data-toggle="modal" data-target="#exampleModal">
+        <button type="button" class="btn btn-secondary">View Records</button>
+    </div>
+    <div class="btn-group dropdown" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Export As...
         </button>
-        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#graphOptionsCollapse" aria-expanded="false" aria-controls="collapseExample">
-            Graph Options
-        </button>
-        <div class="btn-group" role="group" aria-label="Basic example" data-toggle="modal" data-target="#exampleModal">
-            <button type="button" class="btn btn-secondary">View Records</button>
-        </div>
-        <div class="btn-group dropdown" role="group">
-            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Export As...
-            </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" href="/export/{{ user1 }}.json">{{ user1 }} (JSON)</a>
-                <a class="dropdown-item" href="/export/{{ user2 }}.json">{{ user2 }} (JSON)</a>
-                <a class="dropdown-item" href="/export/{{ user1 }}.csv">{{ user1 }} (CSV)</a>
-                <a class="dropdown-item" href="/export/{{ user2 }}.csv">{{ user2 }} (CSV)</a>
-            </div>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            <h6 class="dropdown-header">{{ user1 }}</h6>
+            <a class="dropdown-item" href="/export/{{ user1 }}.json">JSON</a>
+            <a class="dropdown-item" href="/export/{{ user1 }}.csv">CSV</a>
+            <div class="dropdown-divider"></div>
+            <h6 class="dropdown-header">{{ user2 }}</h6>
+            <a class="dropdown-item" href="/export/{{ user2 }}.json">JSON</a>
+            <a class="dropdown-item" href="/export/{{ user2 }}.csv">CSV</a>
+            <div class="dropdown-divider"></div>
+            <h6 class="dropdown-header">All</h6>
         </div>
     </div>
+</div>
 
 {% endblock %}
 
 {% block content %}
 
-    <div class="card collapse" id="graphOptionsCollapse">
-        <div class="row">
-            <div class="card card-body">
-                <div class container-fluid>
+<div class="card collapse" id="graphOptionsCollapse">
+    <div class="row">
+        <div class="card card-body">
+            <div class container-fluid>
                     <span class="input-group mb-3">
 
                         <span class="col">
@@ -47,148 +52,146 @@
                             <h5 class="card-title">Graph Types</h5>
                         </span>
                     </span>
-                </div>
             </div>
         </div>
-
     </div>
 
-    <div class="row">
-        <div class="card" style="width:50%">
+</div>
 
-            <form action="" method="post" novalidate>
-                <div class="input-group mb-3">
-                    {{ form.hidden_tag() }}
-                    {{ form.username1(class_="form-control", placeholder=user1) }}
-                    <div class="input-group-append">
-                        {{ form.update(class_="btn btn-outline-primary") }}
-                        {{ form.remove1(class_="btn btn-outline-danger") }}
-                    </div>
+<div class="row">
+    <div class="card" style="width:50%">
+
+        <form action="" method="post" novalidate>
+            <div class="input-group mb-3">
+                {{ form.hidden_tag() }}
+                {{ form.username1(class_="form-control", placeholder=user1) }}
+                <div class="input-group-append">
+                    {{ form.update(class_="btn btn-outline-primary") }}
+                    {{ form.remove1(class_="btn btn-outline-danger") }}
                 </div>
-            </form>
+            </div>
+        </form>
 
 
-            <canvas id="graph1" class="xpGraph"></canvas>
-        </div>
-
-        <div class="card" style="width:50%">
-
-            <form action="" method="post" novalidate>
-                <div class="input-group mb-3">
-                    {{ form.hidden_tag() }}
-                    {{ form.username2(class_="form-control", placeholder=user2) }}
-                    <div class="input-group-append">
-                        {{ form.update(class_="btn btn-outline-primary") }}
-                        {{ form.remove2(class_="btn btn-outline-danger") }}
-                    </div>
-                </div>
-            </form>
-            <canvas id="graph2" class="xpGraph"></canvas>
-        </div>
+        <canvas id="graph1" class="xpGraph"></canvas>
     </div>
-    {% block javascript %}
-        <script>
 
-            Chart.defaults.global.responsive = true;
-            Chart.defaults.global.maintainAspectRatio = true;
+    <div class="card" style="width:50%">
 
-            Chart.defaults.global.legend.position='bottom' ;
+        <form action="" method="post" novalidate>
+            <div class="input-group mb-3">
+                {{ form.hidden_tag() }}
+                {{ form.username2(class_="form-control", placeholder=user2) }}
+                <div class="input-group-append">
+                    {{ form.update(class_="btn btn-outline-primary") }}
+                    {{ form.remove2(class_="btn btn-outline-danger") }}
+                </div>
+            </div>
+        </form>
+        <canvas id="graph2" class="xpGraph"></canvas>
+    </div>
+</div>
+{% block javascript %}
+<script>
 
-            var chartData1 = {
-              labels : JSON.parse({{ xpdata[0][0] | tojson }}),
-              datasets : [
-                {% for x in range(1,25) %}{
-                label: '{{ keys[x] }}',
-                fill: true,
-                lineTension: 0.1,
-                backgroundColor: "rgba({{ xpcolours[x-1] }},0.2)",
-                borderColor: "rgba({{ xpcolours[x-1] }},1)",
-                borderCapStyle: 'butt',
-                borderDash: [],
-                borderDashOffset: 0.0,
-                borderJoinStyle: 'miter',
-                pointBorderColor: "rgba({{ xpcolours[x-1] }},1)",
-                pointBackgroundColor: "#fff",
-                pointBorderWidth: 1,
-                pointHoverRadius: 5,
-                pointHoverBackgroundColor: "rgba({{ xpcolours[x-1] }},1)",
-                pointHoverBorderColor: "rgba(220,220,220,1)",
-                pointHoverBorderWidth: 2,
-                pointRadius: 1,
-                pointHitRadius: 10,
-                data : JSON.parse({{ xpdata[0][x] | tojson }}),
-                spanGaps: false
-                }{% if x != 25 %},{% endif %}
-                {% endfor %}
-              ]
-            }
+    Chart.defaults.global.responsive = true;
+    Chart.defaults.global.maintainAspectRatio = true;
 
-            var chartData2 = {
-              labels : JSON.parse({{ xpdata[1][0] | tojson }}),
-              datasets : [
-                {% for x in range(1,25) %}{
-                label: '{{ keys[x] }}',
-                fill: true,
-                lineTension: 0.1,
-                backgroundColor: "rgba({{ xpcolours[x-1] }},0.2)",
-                borderColor: "rgba({{ xpcolours[x-1] }},1)",
-                borderCapStyle: 'butt',
-                borderDash: [],
-                borderDashOffset: 0.0,
-                borderJoinStyle: 'miter',
-                pointBorderColor: "rgba({{ xpcolours[x-1] }},1)",
-                pointBackgroundColor: "#fff",
-                pointBorderWidth: 1,
-                pointHoverRadius: 5,
-                pointHoverBackgroundColor: "rgba({{ xpcolours[x-1] }},1)",
-                pointHoverBorderColor: "rgba(220,220,220,1)",
-                pointHoverBorderWidth: 2,
-                pointRadius: 1,
-                pointHitRadius: 10,
-                data : JSON.parse({{ xpdata[1][x] | tojson }}),
-                spanGaps: false
-                }{% if x != 25 %},{% endif %}
-                {% endfor %}
-              ]
-            }
+    Chart.defaults.global.legend.position='bottom' ;
 
-            var ctx1 = document.getElementById("graph1").getContext("2d");
+    var chartData1 = {
+      labels : JSON.parse({{ xpdata[0][0] | tojson }}),
+      datasets : [
+        {% for x in range(1,25) %}{
+        label: '{{ keys[x] }}',
+        fill: true,
+        lineTension: 0.1,
+        backgroundColor: "rgba({{ xpcolours[x-1] }},0.2)",
+        borderColor: "rgba({{ xpcolours[x-1] }},1)",
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: "rgba({{ xpcolours[x-1] }},1)",
+        pointBackgroundColor: "#fff",
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "rgba({{ xpcolours[x-1] }},1)",
+        pointHoverBorderColor: "rgba(220,220,220,1)",
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data : JSON.parse({{ xpdata[0][x] | tojson }}),
+        spanGaps: false
+        }{% if x != 25 %},{% endif %}
+        {% endfor %}
+      ]
+    }
 
-            var ctx2 = document.getElementById("graph2").getContext("2d");
+    var chartData2 = {
+      labels : JSON.parse({{ xpdata[1][0] | tojson }}),
+      datasets : [
+        {% for x in range(1,25) %}{
+        label: '{{ keys[x] }}',
+        fill: true,
+        lineTension: 0.1,
+        backgroundColor: "rgba({{ xpcolours[x-1] }},0.2)",
+        borderColor: "rgba({{ xpcolours[x-1] }},1)",
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: "rgba({{ xpcolours[x-1] }},1)",
+        pointBackgroundColor: "#fff",
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "rgba({{ xpcolours[x-1] }},1)",
+        pointHoverBorderColor: "rgba(220,220,220,1)",
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data : JSON.parse({{ xpdata[1][x] | tojson }}),
+        spanGaps: false
+        }{% if x != 25 %},{% endif %}
+        {% endfor %}
+      ]
+    }
 
-            // create the chart using the chart canvas
-            var chart1 = new Chart(ctx1, {
-              type: "line",
-              data: chartData1,
-              scaleFontColor: "#000000",
-              options: {
-                     legend: {
-                        display: false
-                     }
-                }
-            });
+    var ctx1 = document.getElementById("graph1").getContext("2d");
 
-            var chart2 = new Chart(ctx2, {
-              type: "line",
-              data: chartData2,
-              scaleFontColor: "#000000",
-              options: {
-                     legend: {
-                        display: false
-                     }
-                }
-            });
+    var ctx2 = document.getElementById("graph2").getContext("2d");
 
+    // create the chart using the chart canvas
+    var chart1 = new Chart(ctx1, {
+      type: "line",
+      data: chartData1,
+      scaleFontColor: "#000000",
+      options: {
+             legend: {
+                display: false
+             }
+        }
+    });
 
-        </script>
-    {% endblock %}
+    var chart2 = new Chart(ctx2, {
+      type: "line",
+      data: chartData2,
+      scaleFontColor: "#000000",
+      options: {
+             legend: {
+                display: false
+             }
+        }
+    });
+</script>
+{% endblock %}
 
-    <div class="row">
-        <div class="collapse" id="legendCollapse" style="float: left">
-            <div class="card card-body">
-                <div class="row">
-                    {% for x in range(0,24) %}
-                    <script>
+<div class="row">
+    <div class="collapse" id="legendCollapse" style="float: left">
+        <div class="card card-body">
+            <div class="row">
+                {% for x in range(0,24) %}
+                <script>
                         function {{ keys[x+1] }}OnClickListener() {
                                 document.querySelectorAll('.xpGraph').forEach((chartItem,index)=>{
                                     var chart = Chart.instances[index];
@@ -206,14 +209,14 @@
                                     })
                         }
                     </script>
-                    <span class="{{ keys[x+1] }}LegendBox" style="border-radius: 5px; border: 2px solid rgb({{ xpcolours[x] }}); padding: 2px; margin: 5px; background-color: rgb({{ xpcolours[x] }}); color: white;" onclick="{{ keys[x+1] }}OnClickListener()">
+                <span class="{{ keys[x+1] }}LegendBox" style="border-radius: 5px; border: 2px solid rgb({{ xpcolours[x] }}); padding: 2px; margin: 5px; background-color: rgb({{ xpcolours[x] }}); color: white;" onclick="{{ keys[x+1] }}OnClickListener()">
                     <span class="small">{{ keys[x+1] }}</span>
 
                 </span>
-                    {% endfor %}
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
+</div>
 
 {% endblock %}

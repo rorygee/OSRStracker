@@ -1,47 +1,48 @@
 {% extends "base.html" %}
 
 {% block userbutton %}
-    <br>
-    <div class="btn-group" role="group" style="float: right">
-        <div class="btn-group" role="group">
-            <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#legendCollapse" aria-expanded="false" aria-controls="collapseExample">
-                Legend
-            </button>
-        </div>
-        <div class="btn-group" role="group" aria-label="Record Button" data-toggle="modal" data-target="#recordModal">
-            <button type="button" class="btn btn-secondary">View Records</button>
-        </div>
-        <div class="btn-group" role="group">
-            <button id="exportBtnGroup" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Export As...
-            </button>
-            <div class="dropdown-menu" aria-labelledby="exportBtnGroup">
-                <a class="dropdown-item" href="/export/{{ username }}.json">JSON</a>
-                <a class="dropdown-item" href="/export/{{ username }}.csv">CSV</a>
-            </div>
+<br>
+<div class="btn-group" role="group" style="float: right">
+    <div class="btn-group" role="group">
+        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#legendCollapse" aria-expanded="false" aria-controls="collapseExample">
+            Legend
+        </button>
+    </div>
+    <div class="btn-group" role="group" aria-label="Record Button" data-toggle="modal" data-target="#recordModal">
+        <button type="button" class="btn btn-secondary">View Records</button>
+    </div>
+    <div class="btn-group" role="group">
+        <button id="exportBtnGroup" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Export As...
+        </button>
+        <div class="dropdown-menu" aria-labelledby="exportBtnGroup">
+            <h6 class="dropdown-header">{{ username }}</h6>
+            <a class="dropdown-item" href="/export/{{ username }}.json">JSON</a>
+            <a class="dropdown-item" href="/export/{{ username }}.csv">CSV</a>
         </div>
     </div>
+</div>
 
 {% endblock %}
 
 {% block content %}
 
-    <!-- bar chart canvas element -->
-    <div class="card" style="width:100%">
-                <form action="" method="post" novalidate>
-                <div class="input-group mb-3">
-                    {{ form.hidden_tag() }}
-                    {{ form.username(class_="form-control", placeholder=username) }}
-                    <div class="input-group-append">
-                        {{ form.view(class_="btn btn-outline-primary") }}
-                        {{ form.compare(class_="btn btn-outline-success") }}
-                    </div>
-                </div>
-            </form>
-        <canvas id="myChart"></canvas>
-    </div>
-    {% block javascript %}
-        <script>
+<!-- bar chart canvas element -->
+<div class="card" style="width:100%">
+    <form action="" method="post" novalidate>
+        <div class="input-group mb-3">
+            {{ form.hidden_tag() }}
+            {{ form.username(class_="form-control", placeholder=username) }}
+            <div class="input-group-append">
+                {{ form.view(class_="btn btn-outline-primary") }}
+                {{ form.compare(class_="btn btn-outline-success") }}
+            </div>
+        </div>
+    </form>
+    <canvas id="myChart"></canvas>
+</div>
+{% block javascript %}
+<script>
 
         Chart.defaults.global.responsive = true;
         Chart.defaults.global.maintainAspectRatio = true;
@@ -93,14 +94,14 @@
 
         </script>
 
-    {% endblock %}
+{% endblock %}
 
-    <div class="row">
-        <div class="collapse" id="legendCollapse" style="float: left">
-            <div class="card card-body">
-                <div class="row">
-                    {% for x in range(0,24) %}
-                    <script>
+<div class="row">
+    <div class="collapse" id="legendCollapse" style="float: left">
+        <div class="card card-body">
+            <div class="row">
+                {% for x in range(0,24) %}
+                <script>
                     function {{ keys[x+1] }}OnClickListener() {
                             document.querySelectorAll('.xpGraph').forEach((chartItem,index)=>{
                                 var chart = Chart.instances[index];
@@ -119,55 +120,55 @@
 
                     }
                 </script>
-                    <span class="{{ keys[x+1] }}LegendBox" style="border-radius: 5px; border: 2px solid rgb({{ xpcolours[x] }}); padding: 2px; margin: 5px; background-color: rgb({{ xpcolours[x] }}); color: white;" onclick="{{ keys[x+1] }}OnClickListener()">
+                <span class="{{ keys[x+1] }}LegendBox" style="border-radius: 5px; border: 2px solid rgb({{ xpcolours[x] }}); padding: 2px; margin: 5px; background-color: rgb({{ xpcolours[x] }}); color: white;" onclick="{{ keys[x+1] }}OnClickListener()">
                     <span class="small">{{ keys[x+1] }}</span>
 
                 </span>
-                    {% endfor %}
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
+</div>
 
 
-    <div class="modal fade" id="recordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Records for {{ username }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+<div class="modal fade" id="recordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Records for {{ username }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-                <div class="table-responsive">
-                    <table class="table table-bordered small" >
-                        <tr>
-                            <th>Date</th>
-                            {% for x in range(1,25) %}
-                            <th>{{ keys[x] }}</th>
+            <div class="table-responsive">
+                <table class="table table-bordered small" >
+                    <tr>
+                        <th>Date</th>
+                        {% for x in range(1,25) %}
+                        <th>{{ keys[x] }}</th>
 
-                            {% endfor %}
-                        </tr>
-                        {% for record in records %}
-                        <tr>
-                            {% for x in range(1,26) %}
-                            <td>
-                                {% if (record[x]|int <= 0) and (x != 1) %}
-                                N/A
-                                {% else %}
-                                {{ record[x] }}
-                                {% endif %}
-                            </td>
-                            {% endfor %}
-                        </tr>
                         {% endfor %}
-                    </table>
-                </div>
-
-
+                    </tr>
+                    {% for record in records %}
+                    <tr>
+                        {% for x in range(1,26) %}
+                        <td>
+                            {% if (record[x]|int <= 0) and (x != 1) %}
+                            N/A
+                            {% else %}
+                            {{ record[x] }}
+                            {% endif %}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </table>
             </div>
+
+
         </div>
     </div>
+</div>
 
 {% endblock %}
