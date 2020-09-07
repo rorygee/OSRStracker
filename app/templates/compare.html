@@ -3,16 +3,25 @@
 {% block userbutton %}
 <br>
 
+<!-- menu bar -->
 <div class="btn-group" role="group" style="float: right">
+
+    <!-- show/hide legend -->
     <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#legendCollapse" aria-expanded="false" aria-controls="collapseExample">
         Legend
     </button>
+
+    <!-- show/hide graph options -->
     <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#graphOptionsCollapse" aria-expanded="false" aria-controls="collapseExample">
         Graph Options
     </button>
+
+    <!-- view records -->
     <div class="btn-group" role="group" aria-label="Basic example" data-toggle="modal" data-target="#exampleModal">
         <button type="button" class="btn btn-secondary">View Records</button>
     </div>
+
+    <!-- export data -->
     <div class="btn-group dropdown" role="group">
         <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Export As...
@@ -35,6 +44,7 @@
 
 {% block content %}
 
+<!-- graph options -->
 <div class="card collapse" id="graphOptionsCollapse">
     <div class="row">
         <div class="card card-body">
@@ -43,6 +53,7 @@
 
                         <span class="col">
                             <h5 class="card-title">Scaling</h5>
+                            <!-- uniform scaling toggle -->
                             <div class="form-group form-check">
                                 <input type="checkbox" class="scalingCheckboxInput" id="scalingCheckbox">
                                 <label class="scalingCheckboxLabel" for="scalingCheckbox">Use uniform scale</label>
@@ -58,7 +69,9 @@
 
 </div>
 
+<!-- graph element html rendering -->
 <div class="row">
+    <!-- graph 1 -->
     <div class="card" style="width:50%">
 
         <form action="" method="post" novalidate>
@@ -76,6 +89,7 @@
         <canvas id="graph1" class="xpGraph"></canvas>
     </div>
 
+    <!-- graph 2 -->
     <div class="card" style="width:50%">
 
         <form action="" method="post" novalidate>
@@ -92,13 +106,18 @@
     </div>
 </div>
 {% block javascript %}
+
+<!-- graph javascript -->
 <script>
 
+    // chart.js global variables
     Chart.defaults.global.responsive = true;
     Chart.defaults.global.maintainAspectRatio = true;
 
     Chart.defaults.global.legend.position='bottom' ;
 
+
+    // graph 1 data
     var chartData1 = {
       labels : JSON.parse({{ xpdata[0][0] | tojson }}),
       datasets : [
@@ -128,6 +147,8 @@
       ]
     }
 
+
+    // graph 2 data
     var chartData2 = {
       labels : JSON.parse({{ xpdata[1][0] | tojson }}),
       datasets : [
@@ -157,11 +178,14 @@
       ]
     }
 
+
+    // grabbing html canvas element for both graphs
     var ctx1 = document.getElementById("graph1").getContext("2d");
 
     var ctx2 = document.getElementById("graph2").getContext("2d");
 
-    // create the chart using the chart canvas
+
+    // creating chart and assigning instance variables
     var chart1 = new Chart(ctx1, {
       type: "line",
       data: chartData1,
@@ -186,6 +210,7 @@
 </script>
 {% endblock %}
 
+<!-- legend selection -->
 <div class="row">
     <div class="collapse" id="legendCollapse" style="float: left">
         <div class="card card-body">

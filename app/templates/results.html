@@ -2,15 +2,23 @@
 
 {% block userbutton %}
 <br>
+
+<!-- menu bar -->
 <div class="btn-group" role="group" style="float: right">
+
+    <!-- show/hide legend -->
     <div class="btn-group" role="group">
         <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#legendCollapse" aria-expanded="false" aria-controls="collapseExample">
             Legend
         </button>
     </div>
+
+    <!-- view records -->
     <div class="btn-group" role="group" aria-label="Record Button" data-toggle="modal" data-target="#recordModal">
         <button type="button" class="btn btn-secondary">View Records</button>
     </div>
+
+    <!-- export data -->
     <div class="btn-group" role="group">
         <button id="exportBtnGroup" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Export As...
@@ -27,7 +35,7 @@
 
 {% block content %}
 
-<!-- bar chart canvas element -->
+<!-- graph element html rendering -->
 <div class="card" style="width:100%">
     <form action="" method="post" novalidate>
         <div class="input-group mb-3">
@@ -44,11 +52,14 @@
 {% block javascript %}
 <script>
 
+        // chart.js global variables
         Chart.defaults.global.responsive = true;
         Chart.defaults.global.maintainAspectRatio = true;
 
         Chart.defaults.global.legend.position='bottom' ;
 
+
+        // graph data
         var chartData = {
           labels : JSON.parse({{ xpdata[0] | tojson }}),
           datasets : [
@@ -78,9 +89,12 @@
           ]
         }
 
+
+        // grabbing html canvas element
         var ctx = document.getElementById("myChart").getContext("2d");
 
-        // create the chart using the chart canvas
+
+        // creating chart and assigning instance variables
         var myChart = new Chart(ctx, {
           type: "line",
           data: chartData,
@@ -96,6 +110,7 @@
 
 {% endblock %}
 
+<!-- legend selection -->
 <div class="row">
     <div class="collapse" id="legendCollapse" style="float: left">
         <div class="card card-body">
@@ -130,7 +145,7 @@
     </div>
 </div>
 
-
+<!-- record viewing -->
 <div class="modal fade" id="recordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
