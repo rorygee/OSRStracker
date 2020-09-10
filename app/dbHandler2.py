@@ -12,8 +12,10 @@ class XpRecords(Base):
 
     __tablename__ = 'playerdata'
 
+    # Database referencing
     id = Column(Integer, primary_key=True) # Remember to update the old tables to have a unique id or else the old table is worthless
 
+    # Data referencing (?)
     username = Column(String)
     day = Column(String)
 
@@ -21,6 +23,27 @@ class XpRecords(Base):
     Overall = Column(Integer)
     Attack = Column(Integer)
     Defence = Column(Integer)
+    Strength = Column(Integer)
+    Hitpoints = Column(Integer)
+    Ranged = Column(Integer)
+    Prayer = Column(Integer)
+    Magic = Column(Integer)
+    Cooking = Column(Integer)
+    Woodcutting = Column(Integer)
+    Fletching = Column(Integer)
+    Fishing = Column(Integer)
+    Firemaking = Column(Integer)
+    Crafting = Column(Integer)
+    Smithing = Column(Integer)
+    Mining = Column(Integer)
+    Herblore = Column(Integer)
+    Agility = Column(Integer)
+    Thieving = Column(Integer)
+    Slayer = Column(Integer)
+    Farming = Column(Integer)
+    Runecrafting = Column(Integer)
+    Hunter = Column(Integer)
+    Construction = Column(Integer)
 
 
 def connect_to_db():
