@@ -1,6 +1,27 @@
 import mysql.connector
 import datetime
+from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
 from app import requestsHandler
+
+# Define a single instance to store references to database classes and tables
+Base = declarative_base()
+
+# Class for the xp records table, will likely move this to another file/directory for readability
+class XpRecords(Base):
+
+    __tablename__ = 'playerdata'
+
+    id = Column(Integer, primary_key=True) # Remember to update the old tables to have a unique id or else the old table is worthless
+
+    username = Column(String)
+    day = Column(String)
+
+    # XP stats
+    Overall = Column(Integer)
+    Attack = Column(Integer)
+    Defence = Column(Integer)
+
 
 def connect_to_db():
     return 1
