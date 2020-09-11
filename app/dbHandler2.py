@@ -1,6 +1,6 @@
 import mysql.connector
 import datetime
-from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from app import requestsHandler
 
@@ -45,6 +45,14 @@ class XpRecords(Base):
     Hunter = Column(Integer)
     Construction = Column(Integer)
 
+class LastAccessed(Base):
+
+    __tablename__ = 'playerrate'
+
+    id = Column(Integer, primary_key=True)
+
+    username = Column(String, ForeignKey('playerdata.username'))
+    accessed = Column(String)
 
 def connect_to_db():
     return 1
