@@ -1,9 +1,9 @@
 # OSRS Tracker
-Rewrite of a previously failed project, this currently consists of an database interface and a pretty looking graphical view for recorded experience data from a given Old School Runescape account.
+Currently consists of an database interface and a pretty looking graphical view for recorded experience data from a given Old School Runescape account.
 
-A few other features are being worked on, including a comparison view, alternate graph types and (hopefully) a live graph for viewing experience gains over a single session, but this will be limited by the frequency at which Jagex updates experience records.
+A few other features are being worked on, including alternate graph types and (hopefully) a live graph for viewing experience gains over a single session, but this will be limited by the frequency at which Jagex updates experience records.
 
-Database currently depends on Mysql Connector but will likely change to something like sqlalchemy for flexibility and security.
+In the middle of transitioning to a new database handling module that uses a more sane DB toolkit.
 
 ## Prerequisites
 If you are looking at deploying this on your own web server, the following libraries are needed:</p>
