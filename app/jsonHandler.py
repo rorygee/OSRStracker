@@ -1,4 +1,8 @@
+# Imports
+
 from flask import json
+
+# JSON Handler
 
 dictKeys = ["labels",
             "Overall",

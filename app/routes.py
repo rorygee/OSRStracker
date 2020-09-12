@@ -1,10 +1,16 @@
+# Imports
+
 from flask import render_template, request, redirect, json
+
 from app import app
 from app import dbHandler
 from app import jsonHandler
 from app.forms import usernameForm, addUserForm, compareUserForm
+
 import datetime
 
+
+# Flask Routes
 
 # Interface routes
 

@@ -1,6 +1,12 @@
+# Imports
+
 from flask_wtf import FlaskForm
+
 from wtforms import StringField, SubmitField, IntegerField
 from wtforms.validators import DataRequired
+
+
+# HTML form declarations (Flask)
 
 class usernameForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])

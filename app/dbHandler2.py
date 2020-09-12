@@ -1,8 +1,18 @@
-import mysql.connector
+# Imports
+
 import datetime
+
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+
 from app import requestsHandler
+
+
+# Database Handler (SQLAlchemy/MySQL)
+
+# Establish a 'global' connection, need to modify to use a mysql driver
+engine = create_engine('sqlite:///:memory:', echo=True)
 
 # Define a single instance to store references to database classes and tables
 Base = declarative_base()
