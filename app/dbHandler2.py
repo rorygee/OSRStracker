@@ -66,31 +66,11 @@ class LastAccessed(Base):
     username = Column(String, ForeignKey('playerdata.username'))
     accessed = Column(String)
 
-def connect_to_db():
-    return 1
-
-
-# establishes a connection, runs the query
-def execute_query(query):
-
-    return 1
-
-
-# establishes a connection, executes the query and commits changes to the database
-def query_commit(query):
-
-    return 1
-
-
 def initialise_user_table():
 
     return 1
 
 def check_day(username,date):
-
-    return 1
-
-def add_new_user():
 
     return 1
 
@@ -101,11 +81,6 @@ def add_xp_record(username):
     date = datetime.datetime.now()
 
     if not check_day(username, date):
-
-        insertVars = (
-            username, date.strftime("%x"), xpData[0], xpData[1], xpData[2], xpData[3], xpData[4], xpData[5], xpData[6],
-            xpData[7], xpData[8], xpData[9], xpData[10], xpData[11], xpData[12], xpData[13], xpData[14], xpData[15],
-            xpData[16], xpData[17], xpData[18], xpData[19], xpData[20], xpData[21], xpData[22], xpData[23])
 
         for x in range(24):
             print(xpData[x])
@@ -168,9 +143,13 @@ def add_xp_record(username):
 
 
 def get_xp_records_for_user(username):
-    for user in session.query():
+
+    # Retrieving all records from the database
+    xpRecords = session.query(XpRecords).filter_by(username=username).all()
+
+    for row in xpRecords:
         print(1)
-    return 1
+    return xpRecords
 
 
 def get_xp_record_for_skills(skill, username):
