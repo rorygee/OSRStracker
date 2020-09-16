@@ -12,7 +12,7 @@ from app import requestsHandler
 
 
 # Establish a 'global' connection, need to modify to use a mysql driver
-engine = create_engine('sqlite:///:memory:', echo=True)
+engine = create_engine('mysql://root@localhost:3306/osrsdatabase', echo=True)
 
 session = sessionmaker(bind=engine)
 
@@ -150,8 +150,3 @@ def get_xp_records_for_user(username):
     for row in xpRecords:
         print(1)
     return xpRecords
-
-
-def get_xp_record_for_skills(skill, username):
-
-    return 1
